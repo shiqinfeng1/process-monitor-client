@@ -58,7 +58,7 @@ Process:test start [success]
 * 用于进程监控，管理
 
 ## 安装
-> go get -u github.com/xiongchao123/process-monitor
+> go get -u github.com/xiongchao123/process-monitor-client
 
 ## 实现
 * 被监控进程启动后，按每500ms执行一次状态检测（通过发signal0信号检测），每个被监控进程在一个独立的协程里被监测。
