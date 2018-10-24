@@ -5,7 +5,7 @@
 * Used to monitor and manage processes
 
 ## Installation
-> go get -u github.com/xiongchao123/process-monitor
+> go get -u github.com/shiqinfeng1/process-monitor-client
 
 ## Implementation
 * Check each process by sending signal0 per 500ms, each monitored process is monitored in an independent goroutine.
