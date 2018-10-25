@@ -1,10 +1,11 @@
 package svr
 
 import (
-	"../conf"
-	"../xlog"
 	"fmt"
 	"os/exec"
+
+	"github.com/shiqinfeng1/process-monitor-client/conf"
+	"github.com/shiqinfeng1/process-monitor-client/xlog"
 )
 
 func StartCheck(command string) {
@@ -124,7 +125,7 @@ func CheckProc(command string) (ok bool) {
 	if err != nil {
 		fmt.Println("err:", err)
 	}
-	if (string(out) == "") {
+	if string(out) == "" {
 		return false
 	}
 	return true

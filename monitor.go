@@ -1,14 +1,15 @@
 package main
 
 import (
-	"fmt"
 	"flag"
-	"./conf"
-	"./comm"
-	"./xlog"
-	"./svr"
-	"./util"
+	"fmt"
 	"os"
+
+	"github.com/shiqinfeng1/process-monitor-client/comm"
+	"github.com/shiqinfeng1/process-monitor-client/conf"
+	"github.com/shiqinfeng1/process-monitor-client/svr"
+	"github.com/shiqinfeng1/process-monitor-client/util"
+	"github.com/shiqinfeng1/process-monitor-client/xlog"
 )
 
 func main() {
@@ -100,7 +101,7 @@ func handle_procs(cmd string, service string) {
 		svr.Procs(cmd, service)
 		// ...
 	} else {
-		xlog.Fatal(xlog.ErrorFile,"Invalid parameters!")
+		xlog.Fatal(xlog.ErrorFile, "Invalid parameters!")
 	}
 }
 

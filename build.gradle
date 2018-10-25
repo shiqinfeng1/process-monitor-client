@@ -1,0 +1,73 @@
+plugins {
+    id 'com.github.blindpirate.gogradle' version '0.10' //注意版本号保证最新
+}
+
+golang {
+    packagePath = 'github.com/shiqinfeng1/process-monitor-client' //github上的项目路径
+}
+//构建
+build {
+    //resolveBuildDependencies.enabled = false  //构建时不再进行依赖检查
+    //installDependencies.enabled = false   //构建时不再进行依赖检查
+    // 交叉编译的输出选项，注意，要求go 1.5+
+    targetPlatform = ['linux-amd64','darwin-amd64'] //'windows-amd64',,  'linux-386'
+    
+    // 输出文件的路径，可以是绝对路径（相对于项目目录）或者相对路径
+    // 其中的${}占位符会在交叉编译时被渲染
+    //outputLocation = './.gogradle/${GOOS}_${GOARCH}_${PROJECT_NAME}${GOEXE}' //
+    go 'build -o ./build/bin/${GOOS}_${GOARCH}_pmc${GOEXE} github.com/shiqinfeng1/process-monitor-client'
+}
+
+repositories {
+    golang {
+         root 'golang.org/x/crypto' 
+         url 'https://github.com/golang/crypto.git'
+    }
+    golang {
+         root 'golang.org/x/sys'
+         url 'https://github.com/golang/sys.git'
+    }
+    golang {
+         root 'golang.org/x/net'
+         url 'https://github.com/golang/net.git'
+    }
+    golang {
+         root 'golang.org/x/text'
+         url 'https://github.com/golang/text.git'
+    }
+    golang {
+         root 'golang.org/x/tools'
+         url 'https://github.com/golang/tools.git'
+    }
+    golang {
+         root 'golang.org/x/build'
+         url 'https://github.com/golang/build.git'
+    }
+    golang {
+         root 'golang.org/x/oauth2'
+         url 'https://github.com/golang/oauth2.git'
+    }
+    golang {
+         root 'golang.org/x/sync'
+         url 'https://github.com/golang/sync.git'
+    }
+    golang {
+         root 'golang.org/x/time'
+         url 'https://github.com/golang/time.git'
+    }
+    golang {
+         root 'cloud.google.com/go'
+         url 'https://github.com/GoogleCloudPlatform/google-cloud-go.git'
+    }
+    golang {
+         root 'google.golang.org/api'
+         url 'https://github.com/google/google-api-go-client.git'
+    }
+}
+
+
+dependencies {
+    golang {
+        build(['name':'github.com/go-ini/ini'])
+    }
+}

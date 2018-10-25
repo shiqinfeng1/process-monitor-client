@@ -1,20 +1,21 @@
 package svr
 
 import (
-	"../conf"
-	"../comm"
-	"../xlog"
-	"time"
 	"fmt"
+	"time"
+
+	"github.com/shiqinfeng1/process-monitor-client/comm"
+	"github.com/shiqinfeng1/process-monitor-client/conf"
+	"github.com/shiqinfeng1/process-monitor-client/xlog"
 )
 
 func AllProcs(cmd string) {
-	switch  cmd {
+	switch cmd {
 	case comm.START:
 		for service, config := range conf.Conf {
-			if(config.Autorestart){
+			if config.Autorestart {
 				Procs(comm.RESTART, service)
-			}else if(config.Autostart){
+			} else if config.Autostart {
 				Procs(comm.START, service)
 			}
 		}
@@ -75,4 +76,3 @@ func CheckProcs() {
 		}
 	}
 }
-

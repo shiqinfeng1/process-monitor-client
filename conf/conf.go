@@ -1,14 +1,17 @@
 package conf
 
 import (
+	"bytes"
+	"flag"
 	"fmt"
 	"os"
-	"../comm"
-	"flag"
-	"bytes"
-	"github.com/ini"
-	"../xlog"
 	"path"
+
+	"github.com/shiqinfeng1/process-monitor-client/xlog"
+
+	"github.com/shiqinfeng1/process-monitor-client/comm"
+
+	"github.com/go-ini/ini"
 )
 
 type Config struct {
@@ -38,7 +41,7 @@ func init() {
 	CheckCommand = buffer.String()
 	loadConf()
 	count := len(os.Args)
-	if (count > 2) {
+	if count > 2 {
 		var buf bytes.Buffer
 		for i := 1; i < count; i++ {
 			buf.WriteString(os.Args[i])
@@ -49,7 +52,7 @@ func init() {
 		fmt.Printf("%c[1;40;31m%s%c[0m\n", 0x1B, err_msg, 0x1B)
 		os.Exit(1)
 	}
-	if (count == 2) {
+	if count == 2 {
 		Input = os.Args[1]
 		/*switch os.Args[1] {
 		case "start", "stop", "restart","status","check":
@@ -87,11 +90,11 @@ func loadConf() {
 	//读取配置文件信息
 	// _, err := ini.Load(conf.RootPath+"/conf/conf.ini")
 	cfg, err := ini.Load("./conf/conf.ini")
-	if (err != nil) {
+	if err != nil {
 		xlog.Fatal("", err)
 	} else {
 		names := cfg.SectionStrings()
-		if (names[0] == "DEFAULT") {
+		if names[0] == "DEFAULT" {
 			names = remove(names, 0)
 		}
 		for _, v := range names {
@@ -101,20 +104,20 @@ func loadConf() {
 			isset_autostart := cfg.Section(v).HasKey("autostart")
 			isset_autorestart := cfg.Section(v).HasKey("autorestart")
 			isset_logfile := cfg.Section(v).HasKey("logfile")
-			if (!isset_process_name || !isset_command || !isset_autostart || !isset_autorestart) {
+			if !isset_process_name || !isset_command || !isset_autostart || !isset_autorestart {
 				xlog.Fatal("", "process_name|command|autostart|autorestart 必须填写")
 			}
 			conf.Process_name = cfg.Section(v).Key("process_name").String()
 			conf.Command = cfg.Section(v).Key("command").String()
 			conf.Autostart, err = cfg.Section(v).Key("autostart").Bool()
-			if (err != nil) {
+			if err != nil {
 				xlog.Fatal("", "autostart shoule be bool")
 			}
 			conf.Autorestart, err = cfg.Section(v).Key("autorestart").Bool()
-			if (err != nil) {
+			if err != nil {
 				xlog.Fatal("", "autorestart shoule be bool")
 			}
-			if (isset_logfile) {
+			if isset_logfile {
 				conf.Logfile = cfg.Section(v).Key("logfile").String()
 				xlog.Info(conf.Logfile, "Process:", conf.Process_name, "is loading")
 			} else {
