@@ -48,8 +48,8 @@ func init() {
 	Dir, _ := os.Getwd()
 	LockFile = Dir + "/monitor.lock"
 	var buffer bytes.Buffer
-	buffer.WriteString(Dir)
-	buffer.WriteString("/")
+	//buffer.WriteString(Dir)
+	//buffer.WriteString("/")
 	buffer.WriteString(path.Base(os.Args[0]))
 	buffer.WriteString(" check")
 	CheckCommand = buffer.String()

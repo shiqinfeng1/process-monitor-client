@@ -43,17 +43,15 @@ func main() {
 	case conf.Input == "stop":
 		//check the monitor is or not stop
 		if ok := svr.CheckProc(conf.CheckCommand); !ok {
-			fmt.Print("Process: monitor ")
-			fmt.Printf("%c[1;40;31m%s%c[0m\n", 0x1B, "[is already stop]", 0x1B)
-			os.Exit(1)
+			fmt.Printf("Process: %s %c[1;40;31m%s%c[0m\n", conf.CheckCommand, 0x1B, "[is already stop]. Please Start It", 0x1B)
+			//os.Exit(1)
 		}
 		//stop monitor process and stop check process for daemon
 		svr.AllProcs(comm.STOP)
 	case conf.Input == "restart":
 		//check the monitor is or not stop
 		if ok := svr.CheckProc(conf.CheckCommand); !ok {
-			fmt.Print("Process: monitor ")
-			fmt.Printf("%c[1;40;31m%s%c[0m\n", 0x1B, "[is already stop]", 0x1B)
+			fmt.Printf("Process:  %s %c[1;40;31m%s%c[0m\n", conf.CheckCommand, 0x1B, "[is already stop]", 0x1B)
 		} else {
 			//stop monitor process and stop check process
 			svr.AllProcs(comm.STOP)

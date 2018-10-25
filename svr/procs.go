@@ -31,7 +31,7 @@ func StopCheck(command string) {
 	if err != nil {
 		xlog.Fatal(xlog.ErrorFile, "err", err)
 	}
-	fmt.Print("Process: monitor", " stop ")
+	fmt.Print("StopCheck Process: monitor", " stop ")
 	fmt.Printf("%c[1;40;32m%s%c[0m\n", 0x1B, "[success]", 0x1B)
 }
 
@@ -62,6 +62,7 @@ func StartProc(conf *conf.Config) {
 //StopProc 停止进程
 func StopProc(conf *conf.Config) {
 	config := *conf
+	fmt.Printf("Stop Config=%+v", config)
 	command := config.Command
 	logfile := config.Logfile
 	if ok := CheckProc(command); !ok {
