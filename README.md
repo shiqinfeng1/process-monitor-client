@@ -16,7 +16,7 @@
 ./gradlew init
 ./gradlew build
 ```
-*生成macos和linux平台下的2个可执行文件,路径在 ./build/bin .
+* 生成macos和linux平台下的2个可执行文件,路径在 ./build/bin .
 
 ## 使用方法
 * 配置文件：[monitor.ini](https://github.com/shiqinfeng1/process-monitor-client/blob/master/monitor.ini) (ini格式，支持注释)
