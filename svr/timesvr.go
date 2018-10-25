@@ -9,6 +9,7 @@ import (
 	"github.com/shiqinfeng1/process-monitor-client/xlog"
 )
 
+//AllProcs 进程管理入口
 func AllProcs(cmd string) {
 	switch cmd {
 	case comm.START:
@@ -26,7 +27,7 @@ func AllProcs(cmd string) {
 		}*/
 		StopCheck(conf.CheckCommand)
 	case comm.STATUS:
-		for service, _ := range conf.Conf {
+		for service := range conf.Conf {
 			Procs(cmd, service)
 		}
 		if ok := CheckProc(conf.CheckCommand); ok {
@@ -39,6 +40,7 @@ func AllProcs(cmd string) {
 	}
 }
 
+//Procs 进程管理命令分发
 func Procs(cmd string, service string) {
 	defer func() {
 		if err := recover(); err != nil {
@@ -57,6 +59,7 @@ func Procs(cmd string, service string) {
 	}
 }
 
+//CheckProcs 检查进程状态
 func CheckProcs() {
 	//进入时间服务
 	tick1 := time.Tick(time.Millisecond * 500)

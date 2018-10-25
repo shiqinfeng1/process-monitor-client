@@ -8,6 +8,7 @@ import (
 	"github.com/shiqinfeng1/process-monitor-client/xlog"
 )
 
+//StartCheck 开始自动检测进程
 func StartCheck(command string) {
 	cmdStr := fmt.Sprintf(
 		"nohup %s 1>/dev/null 2>"+xlog.ErrorFile+"&",
@@ -20,7 +21,7 @@ func StartCheck(command string) {
 	}
 }
 
-//停止自动检测进程
+//StopCheck 停止自动检测进程
 func StopCheck(command string) {
 	cmdStr := fmt.Sprintf(
 		"ps -ef|grep -v grep|grep \"%s\" |cut -c 9-15|xargs kill -9",
@@ -34,7 +35,7 @@ func StopCheck(command string) {
 	fmt.Printf("%c[1;40;32m%s%c[0m\n", 0x1B, "[success]", 0x1B)
 }
 
-//启动进程
+//StartProc 启动进程
 func StartProc(conf *conf.Config) {
 	config := *conf
 	command := config.Command
@@ -58,7 +59,7 @@ func StartProc(conf *conf.Config) {
 	}
 }
 
-//停止进程
+//StopProc 停止进程
 func StopProc(conf *conf.Config) {
 	config := *conf
 	command := config.Command
@@ -82,7 +83,7 @@ func StopProc(conf *conf.Config) {
 	}
 }
 
-//获取当前进程信息
+//GetProc 获取当前进程信息
 func GetProc(conf *conf.Config) {
 	config := *conf
 	command := config.Command
@@ -106,7 +107,7 @@ func GetProc(conf *conf.Config) {
 	}
 }
 
-//重启进程
+//RestartProc 重启进程
 func RestartProc(conf *conf.Config) {
 	//stop proc
 	StopProc(conf)
@@ -114,7 +115,7 @@ func RestartProc(conf *conf.Config) {
 	StartProc(conf)
 }
 
-//检查进程是否已经启动
+//CheckProc 检查进程是否已经启动
 func CheckProc(command string) (ok bool) {
 	cmdStr := fmt.Sprintf(
 		"ps aux| grep -v grep|grep \"%s\" |awk '{print $2}'",
