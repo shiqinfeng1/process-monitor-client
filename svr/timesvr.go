@@ -70,7 +70,7 @@ func CheckProcs() {
 		case <-tick1:
 			for _, config := range conf.Conf {
 				if ok := CheckProc(config.Command); !ok {
-					xlog.Warn(config.Logfile, "Process:", config.Process_name, "进程中断")
+					xlog.Warn(config.Logfile, "Process:", config.ProcessName, "进程中断")
 					//start the process
 					StartProc(config)
 				}

@@ -14,20 +14,34 @@ import (
 	"github.com/go-ini/ini"
 )
 
+//Config 配置数据的格式
 type Config struct {
-	Process_name string
-	Command      string
-	Autostart    bool
-	Autorestart  bool
-	Logfile      string
+	ProcessName string
+	Command     string
+	Autostart   bool
+	Autorestart bool
+	Logfile     string
 }
 
 var (
-	List                                bool
-	Start, Stop, Restart, Status, Input string
-	CheckCommand                        string
-	LockFile                            string
-	Conf                                = make(map[string]*Config)
+	//List 命令列表
+	List bool
+	//Start 命令名字
+	Start string
+	//Stop 命令名字
+	Stop string
+	//Restart 命令名字
+	Restart string
+	//Status 命令名字
+	Status string
+	//Input 命令名字
+	Input string
+	//CheckCommand 检查命令
+	CheckCommand string
+	//LockFile 锁定文件
+	LockFile string
+	//Conf 配置数据
+	Conf = make(map[string]*Config)
 )
 
 func init() {
@@ -47,9 +61,9 @@ func init() {
 			buf.WriteString(os.Args[i])
 			buf.WriteString(" ")
 		}
-		err_msg := buf.String()
+		errMsg := buf.String()
 		fmt.Print("undefined command: ")
-		fmt.Printf("%c[1;40;31m%s%c[0m\n", 0x1B, err_msg, 0x1B)
+		fmt.Printf("%c[1;40;31m%s%c[0m\n", 0x1B, errMsg, 0x1B)
 		os.Exit(1)
 	}
 	if count == 2 {
@@ -88,8 +102,7 @@ func init() {
 
 func loadConf() {
 	//读取配置文件信息
-	// _, err := ini.Load(conf.RootPath+"/conf/conf.ini")
-	cfg, err := ini.Load("./conf/conf.ini")
+	cfg, err := ini.Load("./monitor.ini")
 	if err != nil {
 		xlog.Fatal("", err)
 	} else {
@@ -99,15 +112,15 @@ func loadConf() {
 		}
 		for _, v := range names {
 			conf := new(Config)
-			isset_process_name := cfg.Section(v).HasKey("process_name")
-			isset_command := cfg.Section(v).HasKey("command")
-			isset_autostart := cfg.Section(v).HasKey("autostart")
-			isset_autorestart := cfg.Section(v).HasKey("autorestart")
-			isset_logfile := cfg.Section(v).HasKey("logfile")
-			if !isset_process_name || !isset_command || !isset_autostart || !isset_autorestart {
-				xlog.Fatal("", "process_name|command|autostart|autorestart 必须填写")
+			issetProcessName := cfg.Section(v).HasKey("ProcessName")
+			issetCommand := cfg.Section(v).HasKey("command")
+			issetAutostart := cfg.Section(v).HasKey("autostart")
+			issetAutorestart := cfg.Section(v).HasKey("autorestart")
+			issetLogfile := cfg.Section(v).HasKey("logfile")
+			if !issetProcessName || !issetCommand || !issetAutostart || !issetAutorestart {
+				xlog.Fatal("", "ProcessName|command|autostart|autorestart 必须填写")
 			}
-			conf.Process_name = cfg.Section(v).Key("process_name").String()
+			conf.ProcessName = cfg.Section(v).Key("ProcessName").String()
 			conf.Command = cfg.Section(v).Key("command").String()
 			conf.Autostart, err = cfg.Section(v).Key("autostart").Bool()
 			if err != nil {
@@ -117,12 +130,12 @@ func loadConf() {
 			if err != nil {
 				xlog.Fatal("", "autorestart shoule be bool")
 			}
-			if isset_logfile {
+			if issetLogfile {
 				conf.Logfile = cfg.Section(v).Key("logfile").String()
-				xlog.Info(conf.Logfile, "Process:", conf.Process_name, "is loading")
+				xlog.Info(conf.Logfile, "Process:", conf.ProcessName, "is loading")
 			} else {
 				conf.Logfile = xlog.Logfile
-				xlog.Info(conf.Logfile, "Process:", conf.Process_name, "is loading")
+				xlog.Info(conf.Logfile, "Process:", conf.ProcessName, "is loading")
 			}
 			Conf[v] = conf
 		}

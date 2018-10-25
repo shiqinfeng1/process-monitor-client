@@ -47,14 +47,14 @@ func StartProc(conf *conf.Config) {
 	if ok := CheckProc(command); !ok {
 		err := exec.Command("sh", "-c", cmdStr).Run()
 		if err != nil {
-			fmt.Print("Process:", config.Process_name, " start ")
+			fmt.Print("Process:", config.ProcessName, " start ")
 			fmt.Printf("%c[1;40;31m%s%c[0m\n", 0x1B, "[fail]", 0x1B)
 			xlog.Fatal(logfile, err)
 		}
-		fmt.Print("Process:", config.Process_name, " start ")
+		fmt.Print("Process:", config.ProcessName, " start ")
 		fmt.Printf("%c[1;40;32m%s%c[0m\n", 0x1B, "[success]", 0x1B)
 	} else {
-		fmt.Print("Process:", config.Process_name)
+		fmt.Print("Process:", config.ProcessName)
 		fmt.Printf("%c[1;40;32m%s%c[0m\n", 0x1B, " is already start...", 0x1B)
 	}
 }
@@ -65,7 +65,7 @@ func StopProc(conf *conf.Config) {
 	command := config.Command
 	logfile := config.Logfile
 	if ok := CheckProc(command); !ok {
-		fmt.Print("Process:", config.Process_name)
+		fmt.Print("Process:", config.ProcessName)
 		fmt.Printf("%c[1;40;32m%s%c[0m\n", 0x1B, " is already stop...", 0x1B)
 	} else {
 		cmdStr := fmt.Sprintf(
@@ -74,11 +74,11 @@ func StopProc(conf *conf.Config) {
 		)
 		err := exec.Command("sh", "-c", cmdStr).Run()
 		if err != nil {
-			fmt.Print("Process:", config.Process_name, " stop ")
+			fmt.Print("Process:", config.ProcessName, " stop ")
 			fmt.Printf("%c[1;40;31m%s%c[0m\n", 0x1B, "[fail]", 0x1B)
 			xlog.Fatal(logfile, err)
 		}
-		fmt.Print("Process:", config.Process_name, " stop ")
+		fmt.Print("Process:", config.ProcessName, " stop ")
 		fmt.Printf("%c[1;40;32m%s%c[0m\n", 0x1B, "[success]", 0x1B)
 	}
 }
@@ -89,7 +89,7 @@ func GetProc(conf *conf.Config) {
 	command := config.Command
 	logfile := config.Logfile
 	if ok := CheckProc(command); !ok {
-		fmt.Println("Process:", config.Process_name, " is already stop...")
+		fmt.Println("Process:", config.ProcessName, " is already stop...")
 	} else {
 		cmdStr := fmt.Sprintf(
 			"ps -ef| grep -v grep|grep \"%s\"",
@@ -98,11 +98,11 @@ func GetProc(conf *conf.Config) {
 		cmd := exec.Command("sh", "-c", cmdStr)
 		out, err := cmd.CombinedOutput()
 		if err != nil {
-			fmt.Print("Process:", config.Process_name, " Status ")
+			fmt.Print("Process:", config.ProcessName, " Status ")
 			fmt.Printf("%c[1;40;31m%s%c[0m\n", 0x1B, "[fail]", 0x1B)
 			xlog.Fatal(logfile, err)
 		}
-		fmt.Println("Process:", config.Process_name, " Status:")
+		fmt.Println("Process:", config.ProcessName, " Status:")
 		fmt.Println(string(out))
 	}
 }
