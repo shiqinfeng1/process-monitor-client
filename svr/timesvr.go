@@ -22,9 +22,9 @@ func AllProcs(cmd string) {
 		}
 		StartCheck(conf.CheckCommand)
 	case comm.STOP:
-		/*for service, _ := range conf.Conf {
+		for service := range conf.Conf {
 			Procs(cmd, service)
-		}*/
+		}
 		StopCheck(conf.CheckCommand)
 	case comm.STATUS:
 		for service := range conf.Conf {
